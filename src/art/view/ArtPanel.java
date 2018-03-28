@@ -20,9 +20,9 @@ import javax.swing.event.ChangeListener;
 public class ArtPanel extends JPanel
 {
 	private final int MINIMUM_EDGE = 5;
-	private final int MAXIUM_EDGE = 20;
+	private final int MAXIMUM_EDGE = 20;
 	private final int MINIMUM_SCALE = 20;
-	private final int MAXIUM_SCALE = 100;
+	private final int MAXIMUM_SCALE = 100;
 	
 	private ArtController app;
 	
@@ -54,12 +54,12 @@ public class ArtPanel extends JPanel
 		
 		currentScale = MINIMUM_SCALE;
 		currentEdgeCount = MINIMUM_EDGE;
-		scaleSlider = new JSlider(MINIMUM_SCALE, MAXIUM_SCALE);
-		edgeSlider = new JSlider(MINIMUM_EDGE, MAXIUM_EDGE);
+		scaleSlider = new JSlider(MINIMUM_SCALE, MAXIMUM_SCALE);
+		edgeSlider = new JSlider(MINIMUM_EDGE, MAXIMUM_EDGE);
 		
 		canvas = new ShapeCanvas(app);
 		sliderPanel = new JPanel();
-		buttonPanel = new JPanel();
+		buttonPanel = new JPanel(new GridLayout(0, 1));
 		
 		triangleButton = new JButton("Add Triangle");
 		rectangleButton = new JButton("Add Rectangle");
@@ -77,7 +77,30 @@ public class ArtPanel extends JPanel
 	
 	private void setupSliders()
 	{
+		Hashtable<Integer, JLabel> scaleLabels = new Hashtable<Integer, JLabel>();
+		Hashtable<Integer, JLabel> edgeLabels = new Hashtable<Integer, JLabel>();
 		
+		scaleLabels.put(MINIMUM_SCALE, new JLabel("<HTML>Small<BR>Shape</HTML>"));
+		scaleLabels.put((MAXIMUM_SCALE + MINIMUM_SCALE) / 2, new JLabel("<HTML>Medium<BR>Shape</HTML>"));
+		scaleLabels.put(MAXIMUM_SCALE, new JLabel("<HTML>Large<BR>Shape</HTML>"));
+		
+		edgeLabels.put(MINIMUM_EDGE, new JLabel("Edges: " + MINIMUM_EDGE));
+		edgeLabels.put(MAXIMUM_EDGE, new JLabel("Edges: " + MAXIMUM_EDGE));
+		
+		scaleSlider.setLabelTable(scaleLabels);
+		scaleSlider.setOrientation(JSlider.VERTICAL);
+		scaleSlider.setSnapToTicks(true);
+		scaleSlider.setMajorTickSpacing(10);
+		scaleSlider.setPaintTicks(true);
+		scaleSlider.setPaintLabels(true);
+		
+		edgeSlider.setLabelTable(edgeLabels);
+		edgeSlider.setOrientation(JSlider.VERTICAL);
+		edgeSlider.setSnapToTicks(true);
+		edgeSlider.setMajorTickSpacing(3);
+		edgeSlider.setMinorTickSpacing(1);
+		edgeSlider.setPaintTicks(true);
+		edgeSlider.setPaintLabels(true);
 	}
 	
 	private void setupPanel()
