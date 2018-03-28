@@ -4,7 +4,7 @@ public class Runner
 {
 	public static void main (String [] args)
 	{
-		Controller myApp = new Controller();
+		ArtController myApp = new ArtController();
 		myApp.start();
 	}
 }
