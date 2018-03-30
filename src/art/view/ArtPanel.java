@@ -160,7 +160,7 @@ public class ArtPanel extends JPanel
 	
 	private Rectangle createRectangle()
 	{
-		
+		return null;
 	}
 	
 	private void setupListeners()
