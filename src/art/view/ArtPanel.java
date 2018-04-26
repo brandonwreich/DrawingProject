@@ -134,8 +134,8 @@ public class ArtPanel extends JPanel
 
 	private void setupLayout()
 	{
-		appLayout.putConstraint(SpringLayout.WEST, buttonPanel, 40, SpringLayout.WEST, this);
 		appLayout.putConstraint(SpringLayout.WEST, sliderPanel, 20, SpringLayout.EAST, buttonPanel);
+		appLayout.putConstraint(SpringLayout.WEST, buttonPanel, 40, SpringLayout.EAST, canvas);
 	}
 
 	private boolean coinFlip()
@@ -200,7 +200,7 @@ public class ArtPanel extends JPanel
 			double height = Math.random() * currentScale + 1;
 			ellipse.setFrame(cornerX, cornerY, width, height);
 		}
-		
+
 		return ellipse;
 	}
 
@@ -279,7 +279,7 @@ public class ArtPanel extends JPanel
 			{
 				int x = drag.getX();
 				int y = drag.getY();
-				canvas.drawOnCanvas(x, y);
+				canvas.drawOnCanvas(x, y, currentEdgeCount);
 			}
 
 			@Override
@@ -295,13 +295,11 @@ public class ArtPanel extends JPanel
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e)
 			{
-
 			}
 
 			@Override
@@ -313,7 +311,6 @@ public class ArtPanel extends JPanel
 			@Override
 			public void mouseEntered(MouseEvent e)
 			{
-
 			}
 
 			@Override

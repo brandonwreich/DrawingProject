@@ -102,11 +102,11 @@ public class ShapeCanvas extends JPanel implements MouseMotionListener
 		updateImage();
 	}
 
-	public void drawOnCanvas(int xPosition, int yPosition)
+	public void drawOnCanvas(int xPosition, int yPosition, int lineWidth)
 	{
 		Graphics2D current = canvasImage.createGraphics();
 		current.setPaint(Color.DARK_GRAY);
-		current.setStroke(new BasicStroke(3));
+		current.setStroke(new BasicStroke(lineWidth));
 
 		if (previousX == Integer.MIN_VALUE)
 		{
