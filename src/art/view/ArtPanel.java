@@ -10,6 +10,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 
@@ -139,7 +140,7 @@ public class ArtPanel extends JPanel
 
 	private boolean coinFlip()
 	{
-		return (int)(Math.random() * 2) == 0;
+		return (int) (Math.random() * 2) == 0;
 	}
 
 	private Polygon createPolygon(int sides)
@@ -149,7 +150,7 @@ public class ArtPanel extends JPanel
 		int originX = (int) (Math.random() * 600);
 		int originY = (int) (Math.random() * 600);
 
-		for(int index = 0; index < sides; index++)
+		for (int index = 0; index < sides; index++)
 		{
 			int minus = coinFlip() ? -1 : 1;
 			int shiftX = (int) (Math.random() * currentScale) * minus;
@@ -169,7 +170,7 @@ public class ArtPanel extends JPanel
 		int cornerY = (int) (Math.random() * 600);
 		int width = (int) (Math.random() * currentScale) + 1;
 
-		if(coinFlip())
+		if (coinFlip())
 		{
 			currentRectangle = new Rectangle(cornerX, cornerY, width, width);
 		}
@@ -190,7 +191,7 @@ public class ArtPanel extends JPanel
 		int cornerY = (int) (Math.random() * 600);
 		double width = Math.random() * currentScale + 1;
 
-		if(coinFlip())
+		if (coinFlip())
 		{
 			ellipse.setFrame(cornerX, cornerY, width, width);
 		}
@@ -199,6 +200,8 @@ public class ArtPanel extends JPanel
 			double height = Math.random() * currentScale + 1;
 			ellipse.setFrame(cornerX, cornerY, width, height);
 		}
+		
+		return ellipse;
 	}
 
 	private void setupListeners()
@@ -207,7 +210,7 @@ public class ArtPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				Polygon polygon = createPolygon(sides);
+				Polygon polygon = createPolygon(currentEdgeCount);
 				canvas.addShape(polygon);
 			}
 		});
@@ -283,6 +286,40 @@ public class ArtPanel extends JPanel
 			public void mouseMoved(MouseEvent e)
 			{
 
+			}
+		});
+
+		canvas.addMouseListener(new MouseListener()
+		{
+
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e)
+			{
+				canvas.resetLine();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				canvas.resetLine();
 			}
 		});
 	}

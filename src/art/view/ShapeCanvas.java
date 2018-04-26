@@ -122,6 +122,12 @@ public class ShapeCanvas extends JPanel implements MouseMotionListener
 		updateImage();
 	}
 
+	public void resetLine()
+	{
+		previousX = Integer.MIN_VALUE;
+		previousY = Integer.MIN_VALUE;
+	}
+
 	public void save()
 	{
 
