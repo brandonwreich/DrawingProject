@@ -15,4 +15,6 @@ public class ArtController
 	{
 
 	}
+	
+	public void handleErrors
 }

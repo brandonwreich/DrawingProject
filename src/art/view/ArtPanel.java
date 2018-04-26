@@ -140,7 +140,7 @@ public class ArtPanel extends JPanel
 
 	private boolean coinFlip()
 	{
-		return (int) (Math.random() * 2) == 0;
+		return (int)(Math.random() * 2) == 0;
 	}
 
 	private Polygon createPolygon(int sides)
