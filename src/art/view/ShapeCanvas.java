@@ -1,6 +1,7 @@
 package art.view;
 
 import java.awt.BasicStroke;
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,6 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
@@ -23,37 +26,44 @@ import javax.swing.JPanel;
 
 import art.controller.ArtController;
 
-public class ShapeCanvas extends JPanel
+public class ShapeCanvas extends JPanel implements MouseMotionListener
 {
 	private ArrayList<Polygon> triangleList;
 	private ArrayList<Polygon> polygonList;
 	private ArrayList<Ellipse2D> ellipseList;
 	private ArrayList<Rectangle> rectangleList;
-	
+
 	private ArtController app;
-	
+
 	private BufferedImage canvasImage;
-	
+
+	private int previousX;
+	private int previousY;
+
 	public ShapeCanvas(ArtController app)
 	{
 		super();
 		this.app = app;
+
+		previousX = Integer.MIN_VALUE;
+		previousY = Integer.MIN_VALUE;
+
 		triangleList = new ArrayList<Polygon>();
 		polygonList = new ArrayList<Polygon>();
 		ellipseList = new ArrayList<Ellipse2D>();
 		rectangleList = new ArrayList<Rectangle>();
-		
+
 		canvasImage = new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB);
 		this.setMinimumSize(new Dimension(600, 600));
 		this.setPreferredSize(new Dimension(600, 600));
 		this.setMaximumSize(getPreferredSize());
 	}
-	
+
 	public void addShape(Shape current)
 	{
 		if (current instanceof Polygon)
 		{
-			if (((Polygon)current).xpoints.length == 3)
+			if (((Polygon) current).xpoints.length == 3)
 			{
 				triangleList.add((Polygon) current);
 			}
@@ -70,35 +80,62 @@ public class ShapeCanvas extends JPanel
 		{
 			rectangleList.add((Rectangle) current);
 		}
-		
+
 		updateImage();
 	}
-	
+
 	public void clear()
 	{
-		
+		canvasImage = new BufferedImage(600, 600, BufferedImage.TYPE_4BYTE_ABGR);
+		ellipseList.clear();
+		triangleList.clear();
+		polygonList.clear();
+		rectangleList.clear();
+		updateImage();
 	}
-	
+
 	public void changeBackground()
 	{
-		
+		Graphics2D current = canvasImage.createGraphics();
+		current.setPaint(randomColor());
+		current.fillRect(0, 0, canvasImage.getWidth(), canvasImage.getHeight());
+		updateImage();
 	}
-	
+
+	public void drawOnCanvas(int xPosition, int yPosition)
+	{
+		Graphics2D current = canvasImage.createGraphics();
+		current.setPaint(Color.DARK_GRAY);
+		current.setStroke(new BasicStroke(3));
+
+		if (previousX == Integer.MIN_VALUE)
+		{
+			current.drawLine(xPosition, yPosition, xPosition, yPosition);
+		}
+		else
+		{
+			current.drawLine(previousX, previousY, xPosition, yPosition);
+		}
+
+		previousX = xPosition;
+		previousY = yPosition;
+		updateImage();
+	}
+
 	public void save()
 	{
-		
+
 	}
-	
-	
+
 	public Color randomColor()
 	{
 		return null;
 	}
-	
+
 	public void updateImage()
 	{
 		Graphics2D currentGraphics = (Graphics2D) canvasImage.getGraphics();
-		
+
 		for (Ellipse2D current : ellipseList)
 		{
 			currentGraphics.setColor(randomColor());
@@ -107,34 +144,46 @@ public class ShapeCanvas extends JPanel
 			currentGraphics.setColor(randomColor());
 			currentGraphics.draw(current);
 		}
-		
+
 		for (Polygon currentTriangle : triangleList)
 		{
 			currentGraphics.setColor(randomColor());
 			currentGraphics.fill(currentTriangle);
 		}
-		
+
 		for (Polygon currentPolygon : polygonList)
 		{
 			currentGraphics.setColor(randomColor());
 			currentGraphics.setStroke(new BasicStroke(4));
 			currentGraphics.draw(currentPolygon);
 		}
-		
+
 		for (Rectangle currentRectangle : rectangleList)
 		{
 			currentGraphics.setColor(randomColor());
 			currentGraphics.fill(currentRectangle);
 		}
-		
+
 		currentGraphics.dispose();
 		repaint();
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics graphics)
 	{
 		super.paintComponent(graphics);
 		graphics.drawImage(canvasImage, 0, 0, null);
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e)
+	{
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e)
+	{
+		changeBackground();
 	}
 }

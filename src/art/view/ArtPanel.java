@@ -9,6 +9,8 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 
 import java.util.Hashtable;
@@ -137,7 +139,7 @@ public class ArtPanel extends JPanel
 
 	private boolean coinFlip()
 	{
-		return (int) (Math.random() * 2) == 0;
+		return (int)(Math.random() * 2) == 0;
 	}
 
 	private Polygon createPolygon(int sides)
@@ -147,7 +149,7 @@ public class ArtPanel extends JPanel
 		int originX = (int) (Math.random() * 600);
 		int originY = (int) (Math.random() * 600);
 
-		for (int index = 0; index < sides; index++)
+		for(int index = 0; index < sides; index++)
 		{
 			int minus = coinFlip() ? -1 : 1;
 			int shiftX = (int) (Math.random() * currentScale) * minus;
@@ -167,7 +169,7 @@ public class ArtPanel extends JPanel
 		int cornerY = (int) (Math.random() * 600);
 		int width = (int) (Math.random() * currentScale) + 1;
 
-		if (coinFlip())
+		if(coinFlip())
 		{
 			currentRectangle = new Rectangle(cornerX, cornerY, width, width);
 		}
@@ -188,7 +190,7 @@ public class ArtPanel extends JPanel
 		int cornerY = (int) (Math.random() * 600);
 		double width = Math.random() * currentScale + 1;
 
-		if (coinFlip())
+		if(coinFlip())
 		{
 			ellipse.setFrame(cornerX, cornerY, width, width);
 		}
@@ -264,6 +266,23 @@ public class ArtPanel extends JPanel
 				{
 					currentEdgeCount = edgeSlider.getValue();
 				}
+			}
+		});
+
+		canvas.addMouseMotionListener(new MouseMotionListener()
+		{
+			@Override
+			public void mouseDragged(MouseEvent drag)
+			{
+				int x = drag.getX();
+				int y = drag.getY();
+				canvas.drawOnCanvas(x, y);
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e)
+			{
+
 			}
 		});
 	}
