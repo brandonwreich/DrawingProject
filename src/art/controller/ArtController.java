@@ -16,8 +16,13 @@ public class ArtController
 
 	}
 	
-	public void handleErrors()
+	public void handleErrors(Exception error)
 	{
-		
+		System.out.println(error);
+	}
+	
+	public ArtFrame getFrame()
+	{
+		return appFrame;
 	}
 }

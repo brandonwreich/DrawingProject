@@ -26,7 +26,7 @@ import javax.swing.JPanel;
 
 import art.controller.ArtController;
 
-public class ShapeCanvas extends JPanel implements MouseMotionListener
+public class ShapeCanvas extends JPanel
 {
 	private ArrayList<Polygon> triangleList;
 	private ArrayList<Polygon> polygonList;
@@ -143,7 +143,7 @@ public class ShapeCanvas extends JPanel implements MouseMotionListener
 		}
 		catch (NullPointerException badChoice)
 		{
-			app.handleErors(badChoice);
+			app.handleErrors(badChoice);
 		}
 	}
 
