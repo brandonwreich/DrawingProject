@@ -149,7 +149,12 @@ public class ShapeCanvas extends JPanel implements MouseMotionListener
 
 	public Color randomColor()
 	{
-		return null;
+		int red = (int)(Math.random() * 256);
+		int green = (int)(Math.random() * 256);
+		int blue = (int)(Math.random() * 256);
+		int alpha = (int)(Math.random() * 256);
+		
+		return new Color(red, green, blue, alpha);
 	}
 
 	public void updateImage()
@@ -193,17 +198,5 @@ public class ShapeCanvas extends JPanel implements MouseMotionListener
 	{
 		super.paintComponent(graphics);
 		graphics.drawImage(canvasImage, 0, 0, null);
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e)
-	{
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e)
-	{
-		changeBackground();
 	}
 }
